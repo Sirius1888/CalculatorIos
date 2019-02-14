@@ -14,8 +14,9 @@ class ViewController: UIViewController {
     var firstNum: Double = 0
     var firstOperation = 0
     var operation: Int = 0
-    var operationChange: Bool = false;
+    var operationChange: Bool = false
     var mathSign: Bool = false
+    var isEquals: Bool = false
     var sum: Double = 0
     @IBOutlet weak var firstNumber: UILabel!
     @IBOutlet weak var operationLabel: UILabel!
@@ -26,66 +27,82 @@ class ViewController: UIViewController {
 
     
     @IBAction func digits(_ sender: UIButton) {
-        if mathSign == true {
+        if isEquals == true {
             
-
-            secondNumber.text = secondNumber.text! + String(sender.tag)
+            firstNumber.text = ""
+            operationLabel.text = ""
+            secondNumber.text = ""
+            result.text = ""
+            firstNum = 0
+            sum = 0
             mathSign = false
+//            operationChange = false
+            isEquals = false
         } else {
-            secondNumber.text = secondNumber.text! + String(sender.tag)
+            if mathSign == true {
+                secondNumber.text = secondNumber.text! + String(sender.tag)
+                mathSign = false
+            } else {
+                secondNumber.text = secondNumber.text! + String(sender.tag)
+            }
+            
+            countResult(operation)
         }
-        countResult(operation)
+        
+        
+        
         
 //        numberFromScreen = Double(secondNumber.text!)!
         
     }
     
     func countResult(_ operation: Int) {
-       
         if secondNumber.text != "" {
             if operation == 11 { // sqrt
                 if operationChange == true {
                     result.text = "\(sum / Double(secondNumber.text!)!)"
-                    operationChange = false
+                    //                    operationChange = false
                 } else {
                     result.text = "\(Double(firstNumber.text!)! / Double(secondNumber.text!)!)"
                 }
-
+                
             } else if operation == 12 { //pow
                 if operationChange == true {
                     result.text = "\(sum * Double(secondNumber.text!)!)"
-                    operationChange = false
+                    //                    operationChange = false
                 } else {
                     result.text = "\(Double(firstNumber.text!)! * Double(secondNumber.text!)!)"
                 }
             } else if operation == 13 { //minus
                 if operationChange == true {
                     result.text = "\(sum - Double(secondNumber.text!)!)"
-                    operationChange = false
+                    //                    operationChange = false
                 } else {
                     result.text = "\(Double(firstNumber.text!)! - Double(secondNumber.text!)!)"
                 }
             } else if operation == 14 { //plus
                 if operationChange == true {
                     result.text = "\(sum + Double(secondNumber.text!)!)"
-                    operationChange = false
+                    //                    operationChange = false
                 } else {
                     result.text = "\(Double(firstNumber.text!)! + Double(secondNumber.text!)!)"
                 }
             }
-            
-
+            isEquals = false
         }
         
-      
+    
     }
     
     
     @IBAction func buttons(_ sender: UIButton) {
+       
         if (secondNumber.text != "" && sender.tag != 15 && sender.tag != 10) {
-            if firstNumber.text != "" {
+           
+            if firstNumber.text != ""  {
                 sum = Double(result.text!)!
                 operationChange = true
+                 isEquals = false
             }
             
             firstNumber.text = secondNumber.text
@@ -95,70 +112,57 @@ class ViewController: UIViewController {
             if sender.tag == 11 {
                 operationLabel.text = "/"
             } else if sender.tag == 12 {
-                operationLabel.text = "*"
+                operationLabel.text = "x"
             } else if sender.tag == 13 {
                 operationLabel.text = "-"
             } else if sender.tag == 14 {
                 operationLabel.text = "+"
             }
             
+            
+            
            
         } else if sender.tag == 10 {
+            isEquals = false
             firstNumber.text = ""
             operationLabel.text = ""
             secondNumber.text = ""
-        
             result.text = ""
             firstNum = 0
             sum = 0
             operation = 0
             mathSign = false
             operationChange = false
+        } else if sender.tag ==  15 {
+            if firstNumber.text != "" && secondNumber.text != "" {
+                isEquals = true
+                firstNumber.text = result.text
+                sum = Double(result.text!)!
+                secondNumber.text = ""
+                operationLabel.text = ""
+                operation = 0
+                mathSign = false
+                operationChange = false
+                result.text = ""
+                
+            }
+        } else {
+            if sender.tag == 11 {
+                operationLabel.text = "/"
+            } else if sender.tag == 12 {
+                operationLabel.text = "x"
+            } else if sender.tag == 13 {
+                operationLabel.text = "-"
+            } else if sender.tag == 14 {
+                operationLabel.text = "+"
+            }
+            isEquals = false
+            operationChange = false
+
         }
         operation = sender.tag
-        
         countResult(operation)
-        
         mathSign = true
-//        if secondNumber.text != "" && sender.tag != 15 && sender.tag != 10 {
-//            if firstNumber.text != "" {
-//                firstNum = Double(firstNumber.text!)!
-//            } else {
-//                firstNum = Double(secondNumber.text!)!
-//            }
-//
-//            if sender.tag == 11 {
-//                operationLabel.text = "/"
-//
-//            } else if sender.tag == 12 {
-//                  operationLabel.text = "x"
-//
-//            } else if sender.tag == 13 {
-//                  operationLabel.text = "-"
-//
-//            } else if sender.tag == 14 {
-//                  operationLabel.text = "+"
-//
-//            }
-//
-//            firstNumber.text = secondNumber.text
-//            secondNumber.text = ""
-//            operation = sender.tag
-//            mathSign = true
-//        } else if sender.tag == 15 {
-//            if operation == 11 {
-//                result.text = String(firstNum / numberFromScreen)
-//            } else if operation == 12 {
-//                result.text = String(firstNum * numberFromScreen)
-//            } else if operation == 13 {
-//                result.text = String(firstNum - numberFromScreen)
-//            } else if operation == 14 {
-//                result.text = String(firstNum + numberFromScreen)
-//            }
-//
-//        } else if sender.tag == 10 {
-//
-//        }
     }
     
     override func viewDidLoad() {
@@ -171,4 +175,3 @@ class ViewController: UIViewController {
 
 
 }
-
