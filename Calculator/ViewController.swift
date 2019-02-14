@@ -26,6 +26,14 @@ class ViewController: UIViewController {
     
 
     
+    @IBAction func dotSetDouble(_ sender: UIButton) {
+        let num: Double = Double(secondNumber.text!)!
+        let isRounded: Int = Int(round(Double(secondNumber.text!)!))
+        if num == Double(isRounded) {
+            secondNumber.text = secondNumber.text! + "."
+        }
+        
+    }
     @IBAction func digits(_ sender: UIButton) {
         if isEquals == true {
             
@@ -58,40 +66,60 @@ class ViewController: UIViewController {
     
     func countResult(_ operation: Int) {
         if secondNumber.text != "" {
+            var summary: Double = 0;
             if operation == 11 { // sqrt
                 if operationChange == true {
-                    result.text = "\(sum / Double(secondNumber.text!)!)"
+                    summary = (sum / Double(secondNumber.text!)!)
+                    roundSummary(summary: summary)
+                    
                     //                    operationChange = false
                 } else {
-                    result.text = "\(Double(firstNumber.text!)! / Double(secondNumber.text!)!)"
+                    summary = (Double(firstNumber.text!)! / Double(secondNumber.text!)!)
+                    roundSummary(summary: summary)
                 }
                 
             } else if operation == 12 { //pow
                 if operationChange == true {
-                    result.text = "\(sum * Double(secondNumber.text!)!)"
+                     summary = (sum * Double(secondNumber.text!)!)
+                    roundSummary(summary: summary)
                     //                    operationChange = false
                 } else {
-                    result.text = "\(Double(firstNumber.text!)! * Double(secondNumber.text!)!)"
+                    summary = (Double(firstNumber.text!)! * Double(secondNumber.text!)!)
+                    roundSummary(summary: summary)
                 }
             } else if operation == 13 { //minus
                 if operationChange == true {
-                    result.text = "\(sum - Double(secondNumber.text!)!)"
+                     summary = (sum - Double(secondNumber.text!)!)
+                    roundSummary(summary: summary)
                     //                    operationChange = false
                 } else {
-                    result.text = "\(Double(firstNumber.text!)! - Double(secondNumber.text!)!)"
+                    summary = (Double(firstNumber.text!)! - Double(secondNumber.text!)!)
+                    roundSummary(summary: summary)
                 }
             } else if operation == 14 { //plus
                 if operationChange == true {
-                    result.text = "\(sum + Double(secondNumber.text!)!)"
-                    //                    operationChange = false
+//                    result.text = "\(sum + Double(secondNumber.text!)!)"
+                    summary = (sum + Double(secondNumber.text!)!)
+                    roundSummary(summary: summary)
                 } else {
-                    result.text = "\(Double(firstNumber.text!)! + Double(secondNumber.text!)!)"
+                   summary = (Double(firstNumber.text!)! + Double(secondNumber.text!)!)
+                    roundSummary(summary: summary)
+//                    result.text = "\(Double(firstNumber.text!)! + Double(secondNumber.text!)!)"
                 }
             }
-            isEquals = false
+            
+            
         }
-        
+    }
     
+    func roundSummary(summary: Double) {
+        let roundSummary: Int = Int(round(summary))
+        if summary == Double(roundSummary) {
+            result.text = "\(roundSummary)"
+        } else {
+            result.text = "\(summary)"
+        }
+        isEquals = false
     }
     
     
@@ -157,7 +185,7 @@ class ViewController: UIViewController {
                 operationLabel.text = "+"
             }
             isEquals = false
-            operationChange = false
+            operationChange = true
 
         }
         operation = sender.tag
