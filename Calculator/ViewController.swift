@@ -26,13 +26,27 @@ class ViewController: UIViewController {
     
 
     
-    @IBAction func dotSetDouble(_ sender: UIButton) {
-        let num: Double = Double(secondNumber.text!)!
-        let isRounded: Int = Int(round(Double(secondNumber.text!)!))
-        if num == Double(isRounded) {
-            secondNumber.text = secondNumber.text! + "."
+   
+    @IBAction func clearEndedSymbol(_ sender: UIButton) {
+        if secondNumber.text != "" {
+            var string: String = secondNumber.text!
+            string.remove(at: string.index(before: string.endIndex))
+            secondNumber.text = string
+            countResult(operation)
+            if secondNumber.text?.count == 0 {
+                result.text = ""
+            }
         }
         
+    }
+    @IBAction func dotSetDouble(_ sender: UIButton) {
+        if secondNumber.text != "" {
+            let neededChar: Character = "."
+            let string = secondNumber.text!
+            if string.contains(neededChar) == false {
+                secondNumber.text = secondNumber.text! + "."
+            }
+        }
     }
     @IBAction func digits(_ sender: UIButton) {
         if isEquals == true {
