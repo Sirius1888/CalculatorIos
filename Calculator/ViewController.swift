@@ -39,7 +39,7 @@ class ViewController: UIViewController {
         }
         
     }
-    @IBAction func dotSetDouble(_ sender: UIButton) {
+    @IBAction func addDot(_ sender: UIButton) {
         if secondNumber.text != "" {
             let neededChar: Character = "."
             let string = secondNumber.text!
